@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+    
+    <groupId>whylu.maven</groupId>
+	<artifactId>maven-proguard-example</artifactId>
+	<version>1.0</version>
+	<packaging>jar</packaging>
+	
+	<build>
+	    <plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<archive>
+								<manifest>
+									<mainClass>
+										whylu.iot.core.Node
+									</mainClass>
+								</manifest>
+							</archive>
+							<descriptorRefs>
+								<descriptorRef>jar-with-dependencies</descriptorRef>
+							</descriptorRefs>
+							<appendAssemblyId>false</appendAssemblyId>
+							
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		      
+			<plugin>
+				<groupId>com.github.wvengen</groupId>
+				<artifactId>proguard-maven-plugin</artifactId>
+				<version>2.0.14</version>
+				<configuration>
+					<proguardInclude>${project.basedir}/proguard/proguard.conf</proguardInclude>
+					<options>
+						<option>-libraryjars ${java.home}/lib/rt.jar</option>
+						<option>-libraryjars ${java.home}/lib/jce.jar</option>
+						<option>-dontshrink</option>
+						<option>-dontoptimize</option>
+						<option>-allowaccessmodification</option>
+						
+					</options>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>proguard</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		
+		
+	    </plugins>
+	</build>
+
+</project>
